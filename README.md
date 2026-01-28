@@ -119,6 +119,7 @@ Submission Checklist
 
 [x] Screenshots embedded (not linked)
 
-[*] Clean and readable code
+[x] Clean and readable code
 
 [x] Public GitHub repository
+
