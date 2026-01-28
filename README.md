@@ -86,7 +86,7 @@ The screenshots below demonstrate that the API is working correctly.
 
 
 --------------------------------------------------
-* GET /books/search?year=2024
+* GET /books/search?year=2023
 <img width="1361" height="718" alt="Screenshot 2026-01-28 110114" src="https://github.com/user-attachments/assets/a659d4c4-3cc6-449d-9e5f-7b5cd336ace4" />
 
 
@@ -123,5 +123,6 @@ Submission Checklist
 [x] Clean and readable code
 
 [x] Public GitHub repository
+
 
 
