@@ -68,7 +68,8 @@ Each book is represented as a dictionary containing:
 The screenshots below demonstrate that the API is working correctly.
 
 * Required Proof: GET /books
-<img width="1360" height="717" alt="Screenshot 2026-01-28 110049" src="https://github.com/user-attachments/assets/b283f17d-6a31-44b7-92cf-e50309dabc64" />
+<img width="1355" height="715" alt="Screenshot 2026-01-28 123608" src="https://github.com/user-attachments/assets/c201493d-aeee-4218-8ade-75a3928fabf8" />
+
 
 
 --------------------------------------------------
@@ -122,4 +123,5 @@ Submission Checklist
 [x] Clean and readable code
 
 [x] Public GitHub repository
+
 
