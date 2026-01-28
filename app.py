@@ -2,106 +2,71 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# In-memory storage
+# in-memory
 books = []
 
-# Helper function
-def find_book(book_id):
-    for book in books:
-        if book["id"] == book_id:
-            return book
-    return None
+
+@app.route("/")
+def home():
+    return "Library API is running"
 
 
-# 1. POST /books - Add a book
 @app.route("/books", methods=["POST"])
 def add_book():
     data = request.get_json()
 
-    required_fields = ["id", "title", "author", "year"]
-    if not data or not all(field in data for field in required_fields):
-        return jsonify({
-            "status": "error",
-            "message": "Missing required fields"
-        }), 400
+    if not data:
+        return jsonify({"message": "No data provided"}), 400
 
-    if find_book(data["id"]):
-        return jsonify({
-            "status": "error",
-            "message": "Book with this ID already exists"
-        }), 400
+    if "id" not in data or "title" not in data or "author" not in data or "year" not in data:
+        return jsonify({"message": "Required fields missing"}), 400
+
+    #duplicate
+    for book in books:
+        if book["id"] == data["id"]:
+            return jsonify({"message": "Book with this id already exists"}), 400
 
     books.append(data)
-
-    return jsonify({
-        "status": "success",
-        "message": "Book added successfully",
-        "data": data
-    }), 201
+    return jsonify({"message": "Book added", "book": data}), 201
 
 
-# 2. GET /books/<id> - Get book by ID
 @app.route("/books/<int:book_id>", methods=["GET"])
 def get_book(book_id):
-    book = find_book(book_id)
+    for book in books:
+        if book["id"] == book_id:
+            return jsonify(book)
 
-    if not book:
-        return jsonify({
-            "status": "error",
-            "message": "Book not found"
-        }), 404
-
-    return jsonify({
-        "status": "success",
-        "data": book
-    })
+    return jsonify({"message": "Book not found"}), 404
 
 
-# EXTRA (useful): GET /books - Get all books
 @app.route("/books", methods=["GET"])
-def get_all_books():
-    return jsonify({
-        "status": "success",
-        "data": books
-    })
+def get_books():
+    return jsonify(books)
 
 
-# 3. GET /books/search?year=2024
 @app.route("/books/search", methods=["GET"])
 def search_books():
     year = request.args.get("year")
 
     if not year:
-        return jsonify({
-            "status": "error",
-            "message": "Year query parameter is required"
-        }), 400
+        return jsonify({"message": "Year parameter required"}), 400
 
-    filtered_books = [book for book in books if str(book["year"]) == year]
+    result = []
+    for book in books:
+        if str(book["year"]) == year:
+            result.append(book)
 
-    return jsonify({
-        "status": "success",
-        "data": filtered_books
-    })
+    return jsonify(result)
 
 
-# 4. DELETE /books/<id>
 @app.route("/books/<int:book_id>", methods=["DELETE"])
 def delete_book(book_id):
-    book = find_book(book_id)
+    for book in books:
+        if book["id"] == book_id:
+            books.remove(book)
+            return jsonify({"message": "Book deleted"})
 
-    if not book:
-        return jsonify({
-            "status": "error",
-            "message": "Book not found"
-        }), 404
-
-    books.remove(book)
-
-    return jsonify({
-        "status": "success",
-        "message": "Book deleted successfully"
-    })
+    return jsonify({"message": "Book not found"}), 404
 
 
 if __name__ == "__main__":
