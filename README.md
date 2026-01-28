@@ -63,6 +63,14 @@ Each book is represented as a dictionary containing:
 * **DELETE /books/{id}:** Removes a book from the inventory.
 
 
+
+**Hardest bug I faced & how I fixed it**
+--------------------------------------------------
+
+While implementing the delete functionality, I initially tried removing a book without checking if it existed, which caused unexpected behavior.
+
+**The Fix:** I updated the logic to loop through the in-memory list to verify the book’s presence before deleting it. If not found, the API now returns a proper error message (404), making the system more stable.
+
 4️. OUTPUT SCREENSHOTS
 --------------------------------------------------
 The screenshots below demonstrate that the API is working correctly.
@@ -123,6 +131,7 @@ Submission Checklist
 [x] Clean and readable code
 
 [x] Public GitHub repository
+
 
 
 
